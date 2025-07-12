@@ -1,0 +1,426 @@
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { FaBitcoin, FaChartLine, FaShieldAlt, FaUserTie, FaArrowRight } from 'react-icons/fa';
+import bitcoinHero from '../assets/images/bitcoin-icon.png';
+
+const Home = () => {
+  return (
+    <div className="pt-16">
+      {/* Hero Section */}
+      <HeroSection />
+      
+      {/* Features Section */}
+      <FeaturesSection />
+      
+      {/* Services Section */}
+      <ServicesSection />
+      
+      {/* Stats Section */}
+      <StatsSection />
+      
+      {/* CTA Section */}
+      <CTASection />
+    </div>
+  );
+};
+
+// Hero Section Component
+const HeroSection = () => {
+  return (
+    <section className="relative bg-primary-dark text-white overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -right-10 -top-10 w-64 h-64 bg-primary-light rounded-full opacity-20 blur-3xl"></div>
+        <div className="absolute left-1/4 bottom-0 w-96 h-96 bg-accent rounded-full opacity-10 blur-3xl"></div>
+      </div>
+      
+      <div className="container-custom relative z-10 py-20 md:py-32 flex flex-col md:flex-row items-center">
+        {/* Hero Content */}
+        <div className="md:w-1/2 mb-10 md:mb-0">
+          <motion.h1 
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            Your Trusted Bitcoin Exchange & Trading Partner
+          </motion.h1>
+          
+          <motion.p 
+            className="text-lg md:text-xl text-gray-300 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Experience secure, professional, and reliable cryptocurrency trading with BlazeTrade. We make Bitcoin trading accessible for everyone.
+          </motion.p>
+          
+          <motion.div 
+            className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <Link to="/services" className="btn-primary">
+              Our Services
+            </Link>
+            <Link to="/contact" className="btn-secondary">
+              Contact Us
+            </Link>
+          </motion.div>
+        </div>
+        
+        {/* Hero Image */}
+        <motion.div 
+          className="md:w-1/2 flex justify-center"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7 }}
+        >
+          <div className="relative">
+            <div className="w-64 h-64 md:w-80 md:h-80 bg-accent rounded-full opacity-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 blur-xl"></div>
+            <motion.div
+              animate={{ 
+                rotateY: [0, 360],
+              }}
+              transition={{ 
+                duration: 20,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="relative z-10"
+            >
+              <img src={bitcoinHero} alt="Bitcoin" className="w-64 h-64 md:w-80 md:h-80" />
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+// Features Section Component with Scroll Animation
+const FeaturesSection = () => {
+  const features = [
+    {
+      icon: <FaBitcoin className="text-4xl text-yellow-500" />,
+      title: "Secure Bitcoin Exchange",
+      description: "Trade Bitcoin and other cryptocurrencies on our secure and reliable exchange platform."
+    },
+    {
+      icon: <FaChartLine className="text-4xl text-accent" />,
+      title: "Advanced Trading Tools",
+      description: "Access professional trading tools and real-time market data for informed decisions."
+    },
+    {
+      icon: <FaShieldAlt className="text-4xl text-green-500" />,
+      title: "Maximum Security",
+      description: "Your assets are protected with industry-leading security measures and encryption."
+    },
+    {
+      icon: <FaUserTie className="text-4xl text-purple-500" />,
+      title: "Expert Support",
+      description: "Our team of cryptocurrency experts is available 24/7 to assist you with any questions."
+    }
+  ];
+
+  return (
+    <section className="section bg-gray-50">
+      <div className="container-custom">
+        <SectionHeader 
+          title="Why Choose BlazeTrade" 
+          subtitle="We provide the best cryptocurrency trading experience with security, reliability, and professional service."
+        />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+          {features.map((feature, index) => (
+            <FeatureCard 
+              key={index}
+              icon={feature.icon}
+              title={feature.title}
+              description={feature.description}
+              index={index}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Services Section Component
+const ServicesSection = () => {
+  const services = [
+    {
+      title: "Bitcoin Exchange",
+      description: "Buy and sell Bitcoin and other cryptocurrencies with competitive rates and low fees.",
+      link: "/services#bitcoin-exchange"
+    },
+    {
+      title: "Crypto Trading",
+      description: "Trade cryptocurrencies with advanced tools, charts, and market analysis.",
+      link: "/services#crypto-trading"
+    },
+    {
+      title: "Market Analysis",
+      description: "Get detailed market insights and analysis to make informed trading decisions.",
+      link: "/services#market-analysis"
+    },
+    {
+      title: "Portfolio Management",
+      description: "Professional management of your cryptocurrency portfolio for optimal returns.",
+      link: "/services#portfolio-management"
+    },
+    {
+      title: "Security Solutions",
+      description: "Advanced security solutions to protect your digital assets and investments.",
+      link: "/services#security-solutions"
+    },
+    {
+      title: "Consulting Services",
+      description: "Expert consulting services for individuals and businesses entering the crypto space.",
+      link: "/services#consulting"
+    }
+  ];
+
+  return (
+    <section className="section bg-white">
+      <div className="container-custom">
+        <SectionHeader 
+          title="Our Services" 
+          subtitle="Comprehensive cryptocurrency services tailored to your needs"
+        />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+          {services.map((service, index) => (
+            <ServiceCard 
+              key={index}
+              title={service.title}
+              description={service.description}
+              link={service.link}
+              index={index}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Stats Section Component
+const StatsSection = () => {
+  const stats = [
+    { value: "10K+", label: "Active Users" },
+    { value: "$250M+", label: "Monthly Volume" },
+    { value: "99.9%", label: "Uptime" },
+    { value: "24/7", label: "Support" }
+  ];
+
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2
+  });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  return (
+    <section className="py-16 bg-primary-dark text-white">
+      <div className="container-custom">
+        <motion.div 
+          ref={ref}
+          className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+          initial="hidden"
+          animate={controls}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.2
+              }
+            }
+          }}
+        >
+          {stats.map((stat, index) => (
+            <motion.div 
+              key={index}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+              }}
+            >
+              <div className="text-4xl md:text-5xl font-bold mb-2">{stat.value}</div>
+              <div className="text-gray-300">{stat.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+// CTA Section Component
+const CTASection = () => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2
+  });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  return (
+    <section className="section bg-gray-50">
+      <div className="container-custom">
+        <motion.div 
+          ref={ref}
+          className="bg-primary-dark rounded-2xl p-8 md:p-12 text-white text-center"
+          initial="hidden"
+          animate={controls}
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+          }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Start Trading?</h2>
+          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+            Join thousands of traders who trust BlazeTrade for their cryptocurrency exchange and trading needs.
+          </p>
+          <Link 
+            to="/contact" 
+            className="inline-flex items-center btn-primary text-lg px-8 py-3"
+          >
+            Get Started <FaArrowRight className="ml-2" />
+          </Link>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+// Reusable Section Header Component
+const SectionHeader = ({ title, subtitle }) => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2
+  });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  return (
+    <motion.div 
+      ref={ref}
+      className="text-center max-w-3xl mx-auto"
+      initial="hidden"
+      animate={controls}
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+      }}
+    >
+      <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary-dark">{title}</h2>
+      <p className="text-lg text-gray-600">{subtitle}</p>
+    </motion.div>
+  );
+};
+
+// Feature Card Component with Animation
+const FeatureCard = ({ icon, title, description, index }) => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  return (
+    <motion.div 
+      ref={ref}
+      className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+      initial="hidden"
+      animate={controls}
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        visible: { 
+          opacity: 1, 
+          y: 0, 
+          transition: { 
+            duration: 0.5,
+            delay: index * 0.1
+          } 
+        }
+      }}
+    >
+      <div className="mb-4">{icon}</div>
+      <h3 className="text-xl font-semibold mb-2 text-primary-dark">{title}</h3>
+      <p className="text-gray-600">{description}</p>
+    </motion.div>
+  );
+};
+
+// Service Card Component with Animation
+const ServiceCard = ({ title, description, link, index }) => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  return (
+    <motion.div 
+      ref={ref}
+      className="bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow duration-300 border border-gray-100"
+      initial="hidden"
+      animate={controls}
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        visible: { 
+          opacity: 1, 
+          y: 0, 
+          transition: { 
+            duration: 0.5,
+            delay: index * 0.1
+          } 
+        }
+      }}
+    >
+      <h3 className="text-xl font-semibold mb-3 text-primary-dark">{title}</h3>
+      <p className="text-gray-600 mb-4">{description}</p>
+      <Link 
+        to={link} 
+        className="text-accent hover:text-primary-dark flex items-center font-medium transition-colors duration-300"
+      >
+        Learn More <FaArrowRight className="ml-2" />
+      </Link>
+    </motion.div>
+  );
+};
+
+export default Home;
