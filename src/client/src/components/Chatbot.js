@@ -19,7 +19,7 @@ const Chatbot = () => {
     ],
     about: [
       "BlazeTrade is a professional Bitcoin exchange and trading platform established in 2018. We provide secure and reliable cryptocurrency services with a focus on user experience and security.",
-      "Founded with a mission to make cryptocurrency trading accessible to everyone, BlazeTrade offers a range of services including Bitcoin exchange, trading, and portfolio management.",
+      "Founded with a mission to make cryptocurrency trading accessible to everyone, BlazeTrade offers a range of services including Bitcoin exchange, trading, and buying of giftcards.",
       "BlazeTrade is a leading cryptocurrency platform serving over 10,000 active users worldwide. Our team consists of blockchain experts and financial professionals dedicated to providing the best trading experience."
     ],
     services: [
