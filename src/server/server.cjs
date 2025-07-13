@@ -12,8 +12,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API routes
-app.use('/api/chatbot', require('./routes/chatbotRoutes'));
-app.use('/api/contact', require('./routes/contactRoutes'));
+app.use('/api/chatbot', require('./routes/chatbotRoutes.cjs'));
+app.use('/api/contact', require('./routes/contactRoutes.cjs'));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
