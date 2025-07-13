@@ -2,10 +2,10 @@
   "name": "blazetrad-app",
   "version": "1.0.0",
   "description": "Bitcoin exchange and trading website with chatbot",
-  "main": "src/server/server.js",
+  "main": "src/server/server.cjs",
   "scripts": {
-    "start": "node src/server/server.js",
-    "server": "nodemon src/server/server.js",
+    "start": "node src/server/server.cjs",
+    "server": "nodemon src/server/server.cjs",
     "client": "cd src/client && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "cd src/client && npm install && npm run build",

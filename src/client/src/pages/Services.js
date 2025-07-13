@@ -5,7 +5,6 @@ import {
   FaBitcoin,
   FaChartLine, 
   FaChartBar, 
-  FaWallet, 
   FaShieldAlt, 
   FaUserTie,
   FaArrowRight,

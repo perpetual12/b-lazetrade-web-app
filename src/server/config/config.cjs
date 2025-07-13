@@ -6,7 +6,7 @@ require('dotenv').config();
 
 module.exports = {
   // Server configuration
-  port: process.env.PORT || 5000,
+  port: process.env.PORT || 5001,
   nodeEnv: process.env.NODE_ENV || 'development',
   
   // CORS configuration
