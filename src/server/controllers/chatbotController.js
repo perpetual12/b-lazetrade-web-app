@@ -12,7 +12,7 @@ const botResponses = {
   ],
   about: [
     "BlazeTrad is a professional Bitcoin exchange and trading platform. We provide secure and reliable cryptocurrency services with a focus on user experience and security.",
-    "Founded with a mission to make cryptocurrency trading accessible to everyone, BlazeTrad offers a range of services including Bitcoin exchange, trading, and portfolio management."
+    "Founded with a mission to make cryptocurrency trading accessible to everyone, BlazeTrad offers a range of services including Bitcoin exchange, trading, and buying of gift cards."
   ],
   services: [
     "Our services include Bitcoin exchange, cryptocurrency trading, market analysis, portfolio management, security solutions, and consulting services.",
