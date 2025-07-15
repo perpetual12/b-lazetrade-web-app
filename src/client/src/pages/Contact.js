@@ -236,10 +236,10 @@ const ContactSection = () => {
             
             <div className="space-y-6">
               <ContactInfoItem 
-                icon={<FaEnvelope className="text-accent" />}
-                title="Email"
-                content="contact@blazetrade.com"
-                link="mailto:contact@bblazetrade.com"
+                icon={<FaEnvelope className="text-primary-dark" />}
+                title="Email Us"
+                content="support@blazetrade.com"
+                link="mailto:support@blazetrade.com"
               />
               
               <ContactInfoItem 

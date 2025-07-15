@@ -52,24 +52,28 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Contact Us */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-            <ul className="space-y-3">
-              
-              <li className="flex items-start space-x-3">
-                <FaPhone className="text-accent mt-1 flex-shrink-0" />
-                <span>+234 8163309355</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <FaMapMarkerAlt className="text-accent mt-1 flex-shrink-0" />
-                <span>Victoria island, Lagos, Nigeria, 101241.</span>
-              </li>
+            <ul className="space-y-2 text-gray-300">
+              <li><p>Victoria island, Lagos, Nigeria, 101241</p></li>
+              <li><a href="tel:+2348163309355" className="hover:text-accent transition-colors">+234 816 330 9355</a></li>
+              <li><a href="mailto:support@blazetrade.com" className="hover:text-accent transition-colors">support@blazetrade.com</a></li>
             </ul>
             <div className="mt-4">
               <h4 className="text-md font-semibold mb-2">Scan to Chat</h4>
               <img src={qrCodeImage} alt="QR Code for WhatsApp" className="w-24 h-24 rounded-lg" />
             </div>
+          </div>
+
+          {/* Follow Us */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
+            <p className="text-gray-300 mb-4">Stay updated with our latest news and offers on our official Instagram page.</p>
+            <a href="https://instagram.com/blaze__trade?igsh=M3Y4cmhoNXRO" target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-accent hover:text-white transition-colors">
+              <FaInstagram className="mr-2" />
+              @blaze__trade
+            </a>
           </div>
         </div>
 

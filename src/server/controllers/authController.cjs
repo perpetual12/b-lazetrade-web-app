@@ -2,6 +2,8 @@ const User = require('../models/User.cjs');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
+const sendEmail = require('../utils/email.cjs');
+const getWelcomeEmailTemplate = require('../utils/welcomeTemplate.js');
 
 exports.signup = async (req, res) => {
   const errors = validationResult(req);
@@ -29,6 +31,24 @@ exports.signup = async (req, res) => {
     user.password = await bcrypt.hash(password, salt);
 
     await user.save();
+
+    // Send welcome email
+    try {
+      const logoUrl = 'https://i.ibb.co/wYyBf9g/blazetrade-logo.png'; // A publicly accessible URL for your logo
+      const contactEmail = 'support@blazetrade.com';
+
+      const emailHtml = getWelcomeEmailTemplate(fullName, logoUrl, contactEmail);
+
+      await sendEmail({
+        email: user.email,
+        subject: 'Welcome to BlazeTrade!',
+        html: emailHtml,
+        from: `BlazeTrade <${contactEmail}>`
+      });
+    } catch (emailError) {
+      console.error('Failed to send welcome email:', emailError);
+      // We don't block the registration process if email fails
+    }
 
     const payload = {
       user: {

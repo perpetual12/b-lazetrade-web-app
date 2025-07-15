@@ -20,6 +20,9 @@ const Home = () => {
       {/* Stats Section */}
       <StatsSection />
       
+      {/* Instagram CTA Section */}
+      <InstagramCTA />
+
       {/* CTA Section */}
       <CTASection />
     </div>
@@ -424,6 +427,51 @@ const ServiceCard = ({ title, description, link, index }) => {
         Learn More <FaArrowRight className="ml-2" />
       </Link>
     </motion.div>
+  );
+};
+
+// Instagram CTA Section
+const InstagramCTA = () => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2
+  });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  return (
+    <section className="section bg-white">
+      <div className="container-custom">
+        <motion.div 
+          ref={ref}
+          className="text-center max-w-3xl mx-auto"
+          initial="hidden"
+          animate={controls}
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+          }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary-dark">Follow Us on Instagram</h2>
+          <p className="text-lg text-gray-600 mb-8">
+            Stay up-to-date with the latest news, offers, and trading tips by following our official Instagram page.
+          </p>
+          <a 
+            href="https://instagram.com/blaze__trade?igsh=M3Y4cmhoNXRO" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center btn-secondary text-lg px-8 py-3"
+          >
+            @blaze__trade
+          </a>
+        </motion.div>
+      </div>
+    </section>
   );
 };
 
