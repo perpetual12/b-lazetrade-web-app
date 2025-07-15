@@ -1,7 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const connectDB = require('./config/db.cjs');
 require('dotenv').config();
+
+// Connect to database
+connectDB();
 
 // Initialize express app
 const app = express();
@@ -12,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API routes
+app.use('/api/auth', require('./routes/auth.cjs'));
 app.use('/api/chatbot', require('./routes/chatbotRoutes.cjs'));
 app.use('/api/contact', require('./routes/contactRoutes.cjs'));
 

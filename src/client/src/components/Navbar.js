@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import blazeTradeLogo from '../assets/blazetrade-logo.png';
@@ -7,6 +7,13 @@ import blazeTradeLogo from '../assets/blazetrade-logo.png';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,11 +43,17 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-8">
+        <div className="hidden md:flex items-center space-x-8">
           <NavLink to="/" label="Home" />
           <NavLink to="/about" label="About" />
           <NavLink to="/services" label="Services" />
           <NavLink to="/contact" label="Contact" />
+          {token && (
+            <button onClick={handleLogout} className="text-white hover:text-accent relative group">
+              Logout
+              <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+            </button>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -66,6 +79,14 @@ const Navbar = () => {
             <MobileNavLink to="/about" label="About" onClick={toggleMenu} />
             <MobileNavLink to="/services" label="Services" onClick={toggleMenu} />
             <MobileNavLink to="/contact" label="Contact" onClick={toggleMenu} />
+            {token && (
+              <button 
+                onClick={() => { handleLogout(); toggleMenu(); }} 
+                className="text-white hover:text-accent py-2 block text-left w-full"
+              >
+                Logout
+              </button>
+            )}
           </div>
         </motion.div>
       )}
@@ -74,22 +95,28 @@ const Navbar = () => {
 };
 
 const NavLink = ({ to, label }) => {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+
   return (
     <Link 
       to={to} 
-      className="text-white hover:text-accent relative group"
+      className={`relative group hover:text-accent ${isActive ? 'nav-link-active' : 'text-white'}`}
     >
       {label}
-      <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+      <span className={`absolute left-0 right-0 bottom-0 h-0.5 bg-accent transform transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
     </Link>
   );
 };
 
 const MobileNavLink = ({ to, label, onClick }) => {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+
   return (
     <Link 
       to={to} 
-      className="text-white hover:text-accent py-2 block"
+      className={`py-2 block hover:text-accent ${isActive ? 'nav-link-active' : 'text-white'}`}
       onClick={onClick}
     >
       {label}

@@ -58,17 +58,19 @@ const HeroSection = () => {
           </motion.p>
           
           <motion.div 
-            className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
+            className="flex"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <Link to="/services" className="btn-primary">
-              Our Services
-            </Link>
-            <Link to="/contact" className="btn-secondary">
-              Contact Us
-            </Link>
+            <a 
+              href="https://wa.me/2348163309355"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary inline-flex items-center text-lg px-8 py-3"
+            >
+              Trade With Us Now <FaArrowRight className="ml-2" />
+            </a>
           </motion.div>
         </div>
         
@@ -293,16 +295,18 @@ const CTASection = () => {
             visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
           }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Start Trading?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to trade?</h2>
           <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join thousands of traders who trust BlazeTrade for their cryptocurrency exchange and trading needs.
+            Hit the link below to start trading your cryptocurrencies with Blaze Trade.
           </p>
-          <Link 
-            to="/contact" 
+          <a 
+            href="https://wa.me/2348163309355" 
+            target="_blank" 
+            rel="noopener noreferrer"
             className="inline-flex items-center btn-primary text-lg px-8 py-3"
           >
-            Get Started <FaArrowRight className="ml-2" />
-          </Link>
+            Trade Now <FaArrowRight className="ml-2" />
+          </a>
         </motion.div>
       </div>
     </section>
