@@ -11,17 +11,23 @@ exports.signup = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { fullName, email, username, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
-    let user = await User.findOne({ $or: [{ email }, { username }] });
+    let user = await User.findOne({ email });
 
     if (user) {
-      return res.status(400).json({ msg: 'User already exists' });
+      return res.status(400).json({ msg: 'User with this email already exists' });
+    }
+
+    user = await User.findOne({ username });
+
+    if (user) {
+      return res.status(400).json({ msg: 'Username is already taken' });
     }
 
     user = new User({
-      fullName,
+      fullName: username, // Or a separate fullName field if you add it to the form
       email,
       username,
       password
@@ -34,10 +40,9 @@ exports.signup = async (req, res) => {
 
     // Send welcome email
     try {
-      const logoUrl = 'https://i.ibb.co/wYyBf9g/blazetrade-logo.png'; // A publicly accessible URL for your logo
+      const logoUrl = 'https://i.ibb.co/wYyBf9g/blazetrade-logo.png';
       const contactEmail = 'support@blazetrade.com';
-
-      const emailHtml = getWelcomeEmailTemplate(fullName, logoUrl, contactEmail);
+      const emailHtml = getWelcomeEmailTemplate(user.fullName, logoUrl, contactEmail);
 
       await sendEmail({
         email: user.email,
@@ -47,7 +52,6 @@ exports.signup = async (req, res) => {
       });
     } catch (emailError) {
       console.error('Failed to send welcome email:', emailError);
-      // We don't block the registration process if email fails
     }
 
     const payload = {
@@ -66,7 +70,7 @@ exports.signup = async (req, res) => {
       }
     );
   } catch (err) {
-    console.error(err.message);
+    console.error('Signup Error:', err);
     res.status(500).send('Server error');
   }
 };
@@ -83,13 +87,13 @@ exports.login = async (req, res) => {
     let user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(400).json({ msg: 'Invalid Credentials' });
+      return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(400).json({ msg: 'Invalid Credentials' });
+      return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
     const payload = {
@@ -108,7 +112,7 @@ exports.login = async (req, res) => {
       }
     );
   } catch (err) {
-    console.error(err.message);
+    console.error('Login Error:', err);
     res.status(500).send('Server error');
   }
 };

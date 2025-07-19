@@ -10,21 +10,21 @@ const Home = () => {
     <div className="pt-16">
       {/* Hero Section */}
       <HeroSection />
-      
-      {/* Features Section */}
-      <FeaturesSection />
-      
-      {/* Services Section */}
-      <ServicesSection />
-      
-      {/* Stats Section */}
-      <StatsSection />
-      
+
       {/* Instagram CTA Section */}
       <InstagramCTA />
 
       {/* CTA Section */}
       <CTASection />
+      
+      {/* Features Section */}
+      <FeaturesSection />
+      
+      {/* Stats Section */}
+      <StatsSection />
+
+      {/* Services Section */}
+      <ServicesSection />
     </div>
   );
 };

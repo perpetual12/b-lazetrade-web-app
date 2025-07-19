@@ -9,6 +9,7 @@ import Services from './pages/Services';
 import Contact from './pages/Contact';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import LandingPage from './pages/LandingPage';
 
 // Components
 import Navbar from './components/Navbar';
@@ -19,12 +20,18 @@ import ScrollToTop from './components/ScrollToTop';
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem('token');
-  return token ? children : <Navigate to="/login" />;
+  return token ? children : <Navigate to="/" />;
 };
+
+const PublicRoute = ({ children }) => {
+    const token = localStorage.getItem('token');
+    return token ? <Navigate to="/dashboard" /> : children;
+}
 
 const Layout = () => {
   const location = useLocation();
   const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
+  const isLandingPage = location.pathname === '/';
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-900">
@@ -36,7 +43,8 @@ const Layout = () => {
         transition={{ duration: 0.5 }}
       >
         <Routes>
-          <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+          <Route path="/" element={<PublicRoute><LandingPage /></PublicRoute>} />
+          <Route path="/dashboard" element={<PrivateRoute><Home /></PrivateRoute>} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
@@ -45,7 +53,8 @@ const Layout = () => {
         </Routes>
       </motion.main>
       {!isAuthPage && <Chatbot />}
-      {!isAuthPage ? <Footer /> : <AuthFooter />}
+      {!isAuthPage && !isLandingPage && <Footer />}
+      {isAuthPage && <AuthFooter />}
     </div>
   );
 };

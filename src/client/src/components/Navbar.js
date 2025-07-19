@@ -34,58 +34,79 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-primary-dark shadow-lg py-2' : 'bg-transparent py-4'}`}>
+    return (
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-blue-950 shadow-lg py-3' : 'bg-blue-950/50 backdrop-blur-sm py-4'}`}>
       <div className="container-custom flex justify-between items-center">
-        <Link to="/" className="flex items-center space-x-2">
+        <Link to={token ? "/dashboard" : "/"} className="flex items-center space-x-2">
           <img src={blazeTradeLogo} alt="BlazeTrade Logo" className="h-8 object-contain" />
           <span className="text-xl font-bold text-white">BlazeTrade</span>
         </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-8">
-          <NavLink to="/" label="Home" />
-          <NavLink to="/about" label="About" />
-          <NavLink to="/services" label="Services" />
-          <NavLink to="/contact" label="Contact" />
-          {token && (
-            <button onClick={handleLogout} className="text-white hover:text-accent relative group">
-              Logout
-              <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
-            </button>
+          {token ? (
+            <>
+              <NavLink to="/dashboard" label="Home" />
+              <NavLink to="/about" label="About" />
+              <NavLink to="/services" label="Services" />
+              <NavLink to="/contact" label="Contact" />
+              <button onClick={handleLogout} className="text-white hover:text-blue-300 transition duration-300">
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <NavLink to="/" label="Home" />
+              <NavLink to="/login" label="Login" />
+              <Link to="/signup" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                Sign Up
+              </Link>
+            </>
           )}
         </div>
 
         {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden text-white focus:outline-none" 
-          onClick={toggleMenu}
-        >
-          {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-        </button>
+        <div className="md:hidden flex items-center space-x-4">
+          {!token && (
+            <Link to="/login" className="bg-blue-600 text-white text-sm font-semibold px-3 py-1.5 rounded-md hover:bg-blue-700 transition-colors">
+              Login
+            </Link>
+          )}
+          <button onClick={toggleMenu} className="text-white focus:outline-none">
+            {isOpen ? <FaTimes className="h-6 w-6" /> : <FaBars className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
       {isOpen && (
         <motion.div 
-          className="md:hidden bg-primary-dark"
+          className="md:hidden bg-blue-900"
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
           transition={{ duration: 0.3 }}
         >
           <div className="container-custom py-4 flex flex-col space-y-4">
-            <MobileNavLink to="/" label="Home" onClick={toggleMenu} />
-            <MobileNavLink to="/about" label="About" onClick={toggleMenu} />
-            <MobileNavLink to="/services" label="Services" onClick={toggleMenu} />
-            <MobileNavLink to="/contact" label="Contact" onClick={toggleMenu} />
-            {token && (
-              <button 
-                onClick={() => { handleLogout(); toggleMenu(); }} 
-                className="text-white hover:text-accent py-2 block text-left w-full"
-              >
-                Logout
-              </button>
+            {token ? (
+              <>
+                <MobileNavLink to="/dashboard" label="Home" onClick={toggleMenu} />
+                <MobileNavLink to="/about" label="About" onClick={toggleMenu} />
+                <MobileNavLink to="/services" label="Services" onClick={toggleMenu} />
+                <MobileNavLink to="/contact" label="Contact" onClick={toggleMenu} />
+                <button 
+                  onClick={() => { handleLogout(); toggleMenu(); }} 
+                  className="text-white hover:text-blue-300 py-2 block text-left w-full"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <MobileNavLink to="/" label="Home" onClick={toggleMenu} />
+                <MobileNavLink to="/login" label="Login" onClick={toggleMenu} />
+                <MobileNavLink to="/signup" label="Sign Up" onClick={toggleMenu} />
+              </>
             )}
           </div>
         </motion.div>
@@ -101,10 +122,8 @@ const NavLink = ({ to, label }) => {
   return (
     <Link 
       to={to} 
-      className={`relative group hover:text-accent ${isActive ? 'nav-link-active' : 'text-white'}`}
-    >
+      className={`text-white hover:text-blue-300 transition duration-300 ${isActive ? 'text-blue-300' : ''}`}>
       {label}
-      <span className={`absolute left-0 right-0 bottom-0 h-0.5 bg-accent transform transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
     </Link>
   );
 };
@@ -116,7 +135,7 @@ const MobileNavLink = ({ to, label, onClick }) => {
   return (
     <Link 
       to={to} 
-      className={`py-2 block hover:text-accent ${isActive ? 'nav-link-active' : 'text-white'}`}
+      className={`py-2 block transition duration-300 ${isActive ? 'text-blue-300' : 'text-white'} hover:text-blue-300`}
       onClick={onClick}
     >
       {label}

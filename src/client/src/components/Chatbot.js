@@ -4,6 +4,7 @@ import { FaRobot, FaTimes, FaPaperPlane, FaUser } from 'react-icons/fa';
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const token = localStorage.getItem('token');
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -12,11 +13,15 @@ const Chatbot = () => {
 
   // Predefined responses for the chatbot
   const botResponses = {
-    greetings: [
-      "Hello! Welcome to BlazeTrade. How can I assist you today?",
-      "Hi there! I'm BlazeTrade's virtual assistant. What would you like to know about our services?",
-      "Welcome to BlazeTrade! I'm here to help with any questions about our Bitcoin exchange and trading services."
-    ],
+    greetings: token 
+      ? [
+          "Hello! Welcome back to BlazeTrade. How can I assist you today?",
+          "Welcome back! I'm here to help with any questions about your account or our services.",
+        ]
+      : [
+          "Hello! Welcome to BlazeTrade. Login to start trading.",
+          "Hi there! Please login to access all our trading features.",
+        ],
     about: [
       "BlazeTrade is a professional Bitcoin exchange and trading platform established in 2018. We provide secure and reliable cryptocurrency services with a focus on user experience and security.",
       "Founded with a mission to make cryptocurrency trading accessible to everyone, BlazeTrade offers a range of services including Bitcoin exchange, trading, and buying of giftcards.",
