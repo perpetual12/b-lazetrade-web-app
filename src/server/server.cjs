@@ -21,9 +21,10 @@ app.use('/api/auth', require('./routes/auth.cjs'));
 app.use('/api/chatbot', require('./routes/chatbotRoutes.cjs'));
 app.use('/api/contact', require('./routes/contactRoutes.cjs'));
 
-// Serve static assets if in production
+// Serve frontend in production
 if (process.env.NODE_ENV === 'production') {
-  // Set static folder
+  // Serve the static files from the React app
+  app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
   app.use(express.static(path.join(__dirname, '../client/build')));
 
   app.get('*', (req, res) => {

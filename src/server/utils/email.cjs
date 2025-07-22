@@ -4,7 +4,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const sendEmail = async (options) => {
-  // 1. Create a transporter
+  // For development, use Ethereal to catch emails
+  // In a real production environment, you would add a condition here
+  // to use a different transporter (e.g., SendGrid).
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
@@ -14,16 +16,18 @@ const sendEmail = async (options) => {
     },
   });
 
-  // 2. Define the email options
   const mailOptions = {
-    from: options.from || 'BlazeTrade <no-reply@blazetrade.com>',
-    to: options.email,
+    from: process.env.EMAIL_FROM,
+    to: options.to,
     subject: options.subject,
     html: options.html,
   };
 
-  // 3. Actually send the email
-  await transporter.sendMail(mailOptions);
+  const info = await transporter.sendMail(mailOptions);
+
+  console.log('Message sent: %s', info.messageId);
+  // Preview only available when sending through an Ethereal account
+  console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 };
 
 module.exports = sendEmail;

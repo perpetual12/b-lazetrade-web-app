@@ -12,9 +12,8 @@ const Signup = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post('/api/auth/signup', data);
-      localStorage.setItem('token', response.data.token);
-      navigate('/dashboard');
+      await axios.post('/api/auth/signup', data);
+      navigate('/check-email');
     } catch (error) {
       if (error.response && error.response.data.msg) {
         setServerError(error.response.data.msg);

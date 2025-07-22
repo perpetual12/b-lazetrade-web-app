@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 // Pages
@@ -10,6 +10,8 @@ import Contact from './pages/Contact';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import LandingPage from './pages/LandingPage';
+import CheckEmail from './pages/CheckEmail';
+import EmailVerification from './pages/EmailVerification';
 
 // Components
 import Navbar from './components/Navbar';
@@ -24,9 +26,11 @@ const PrivateRoute = ({ children }) => {
 };
 
 const PublicRoute = ({ children }) => {
-    const token = localStorage.getItem('token');
-    return token ? <Navigate to="/dashboard" /> : children;
-}
+  const isAuthenticated = !!localStorage.getItem('token');
+  return isAuthenticated ? <Navigate to="/dashboard" /> : children;
+};
+
+
 
 const Layout = () => {
   const location = useLocation();
@@ -45,11 +49,13 @@ const Layout = () => {
         <Routes>
           <Route path="/" element={<PublicRoute><LandingPage /></PublicRoute>} />
           <Route path="/dashboard" element={<PrivateRoute><Home /></PrivateRoute>} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<PrivateRoute><About /></PrivateRoute>} />
+          <Route path="/services" element={<PrivateRoute><Services /></PrivateRoute>} />
+          <Route path="/contact" element={<PrivateRoute><Contact /></PrivateRoute>} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/check-email" element={<CheckEmail />} />
+          <Route path="/verify-email/:token" element={<EmailVerification />} />
         </Routes>
       </motion.main>
       {!isAuthPage && <Chatbot />}
